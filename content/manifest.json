@@ -1,0 +1,53 @@
+{
+  "brand": {
+    "name": "StackRewind",
+    "tagline": "Rewind the stack to the problem that created it."
+  },
+  "defaultRoute": {
+    "volume": "networking",
+    "chapter": "ch1"
+  },
+  "volumes": [
+    {
+      "id": "networking",
+      "number": 1,
+      "code": "net",
+      "title": "Networking",
+      "status": "published",
+      "chapters": [
+        {
+          "id": "ch1",
+          "number": 1,
+          "era": "1960–1969",
+          "title": "Why Packets Exist",
+          "subtitle": "How computers learned to share a line.",
+          "dataPath": "content/networking/chapter1.json"
+        },
+        {
+          "id": "ch2",
+          "number": 2,
+          "era": "1970–1983",
+          "title": "Who Gets to Talk?",
+          "subtitle": "How computers learned to share one wire without talking over each other.",
+          "dataPath": "content/networking/chapter2.json"
+        }
+      ]
+    },
+    {
+      "id": "operating-systems",
+      "number": 2,
+      "code": "os",
+      "title": "Operating Systems",
+      "status": "coming-soon",
+      "chapters": []
+    },
+    {
+      "id": "cybersecurity",
+      "number": 3,
+      "code": "sec",
+      "title": "Cybersecurity",
+      "status": "coming-soon",
+      "chapters": []
+    }
+  ]
+}

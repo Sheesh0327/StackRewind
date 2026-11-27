@@ -1,0 +1,38 @@
+{
+  "volumeId": "networking",
+  "chapterId": "ch2",
+  "assetPrefix": "net-ch2",
+  "voice": "en-US-AndrewMultilingualNeural",
+  "pages": [
+    {
+      "page": 1,
+      "output": "assets/audio/net-ch2-p01.mp3",
+      "text": "When multiple hosts share one Shared Medium, whether a copper cable or an open radio channel, transmitting simultaneously merges their signals into unreadable noise. In 1970, Norman Abramson designed ALOHAnet in Hawaii, linking island terminals over a shared inbound UHF radio channel. Under Pure ALOHA, any terminal transmits whenever ready and waits for a hub acknowledgment; if two bursts overlap by even a single bit across a two-packet window, both garble and retry after random timeouts, capping channel efficiency at 18.4 percent."
+    },
+    {
+      "page": 2,
+      "output": "assets/audio/net-ch2-p02.mp3",
+      "text": "Pure ALOHA wasted bandwidth because a late packet could clip the tail of an earlier one already mid-flight. In 1972, Lawrence Roberts introduced Slotted ALOHA, dividing time into synchronized discrete slots equal to one packet duration. Terminals may only begin transmitting at the exact tick of a new slot boundary, shrinking the vulnerable overlap window in half and doubling peak throughput to 36.8 percent. Yet blind radios still cannot hear each other mid-air, so two stations picking the same tick still ruin an entire slot."
+    },
+    {
+      "page": 3,
+      "output": "assets/audio/net-ch2-p03.mp3",
+      "text": "In May 1973 at Xerox PARC, Bob Metcalfe and David Boggs needed to wire dozens of Alto workstations to one fast laser printer without a fragile central switch. They ran a single passive Coaxial Ether cable tapped by every machine and paired it with CSMA/CD. Each transceiver listens for carrier voltage before sending, then monitors the wire while transmitting; if two signals collide, the summed voltage triggers an instant abort and a short jam signal so every host stops wasting wire time immediately."
+    },
+    {
+      "page": 4,
+      "output": "assets/audio/net-ch2-p04.mp3",
+      "text": "Aborting a collision only works if both stations do not immediately retransmit in lockstep and collide forever. Ethernet breaks the tie with Binary Exponential Backoff. After its first collision, each host flips a coin to wait zero or one slot time; after the second collision, it picks randomly from zero to three slots, doubling the contention window on each clash up to 1,023 slots. That self-tuning spread lets busy offices sustain over eighty percent link utilization without a master clock, though heavy bursts still spike latency."
+    },
+    {
+      "page": 5,
+      "output": "assets/audio/net-ch2-p05.mp3",
+      "text": "Because a passive wire broadcasts every electrical pulse to every tap, each host needs hardware rules to separate valid messages from background traffic. Standardized by DIX in 1980 and IEEE 802.3 in 1983, an Ethernet Frame opens with a synchronizing preamble, stamps 48-bit destination and source MAC Address headers, pads short payloads to 64 bytes so distant collisions propagate back in time, and appends a 32-bit CRC checksum. Network cards silently filter unmatched addresses in silicon, keeping CPUs free for real work."
+    },
+    {
+      "page": 6,
+      "output": "assets/audio/net-ch2-p06.mp3",
+      "text": "By 1983, IEEE 802.3 turned local office wiring into a global standard, though packing dozens of hosts into one shared Collision Domain still strained busy rooms until switches later gave every port its own wire. Even then, Ethernet's success exposed a bigger barrier: a flat 48-bit MAC address only identifies a card on one local cable, carrying zero map of the outside world. With Ethernet LANs, ARPANET trunks, and packet radio all speaking incompatible frames, how do you bridge separate networks into one global Internet?"
+    }
+  ]
+}

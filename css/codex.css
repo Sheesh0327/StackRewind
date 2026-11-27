@@ -1,0 +1,208 @@
+/* Minimal Text-Only Inline Codex Terms */
+.codex-term {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 2px;
+  padding: 0;
+  margin: 0;
+  color: var(--sr-amber);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: transparent;
+  transition: color 140ms ease, text-decoration-color 140ms ease;
+}
+
+.codex-term:hover {
+  color: var(--sr-amber-hover);
+  text-decoration: underline;
+  text-decoration-color: var(--sr-amber-underline);
+}
+
+.codex-term:focus-visible {
+  outline: 2px solid var(--sr-amber);
+  outline-offset: 3px;
+}
+
+/* Slide-Over Codex Drawer (<dialog>) */
+.sr-codex-drawer {
+  margin: 0 0 0 auto;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--sr-border-strong);
+  width: min(460px, 100vw);
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  background: var(--sr-drawer-bg);
+  color: var(--sr-ink);
+  box-shadow: -16px 0 48px var(--sr-shadow-deep);
+
+  opacity: 0;
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sr-codex-drawer {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-codex-drawer {
+    transition-duration: 100ms;
+  }
+}
+
+.sr-codex-drawer:modal {
+  overscroll-behavior: contain;
+}
+
+.sr-codex-drawer::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: rgba(5, 7, 10, 0);
+  transition-property: background-color, display, overlay;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+
+:is(.sr-codex-drawer[open]):where(:not([data-closing])) {
+  opacity: 1;
+}
+
+@starting-style {
+  :is(.sr-codex-drawer[open]):where(:not([data-closing])) {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :is(.sr-codex-drawer[open]):where(:not([data-closing])) {
+    transform: translateX(0);
+  }
+
+  @starting-style {
+    :is(.sr-codex-drawer[open]):where(:not([data-closing])) {
+      transform: translateX(100%);
+    }
+  }
+}
+
+:is(.sr-codex-drawer[open]):where(:not([data-closing]))::backdrop {
+  background-color: var(--sr-backdrop-bg);
+  backdrop-filter: blur(2px);
+}
+
+@starting-style {
+  :is(.sr-codex-drawer[open]):where(:not([data-closing]))::backdrop {
+    background-color: rgba(5, 7, 10, 0);
+  }
+}
+
+.sr-codex-surface {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.sr-codex-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.35rem;
+  border-bottom: 1px solid var(--sr-border);
+  background: var(--sr-drawer-header-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.sr-codex-eyebrow {
+  display: block;
+  font-family: var(--sr-font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sr-amber);
+  margin-bottom: 0.3rem;
+}
+
+.sr-codex-title {
+  margin: 0;
+  font-family: var(--sr-font-display);
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.sr-codex-body {
+  padding: 1.25rem 1.35rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.sr-codex-card {
+  background: var(--sr-surface-grad);
+  border: 1px solid var(--sr-border);
+  border-radius: 14px;
+  padding: 1rem 1.15rem;
+  box-shadow: var(--sr-sheen);
+}
+
+.sr-codex-field + .sr-codex-field {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--sr-border);
+}
+
+.sr-codex-label {
+  margin: 0 0 0.35rem;
+  font-family: var(--sr-font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--sr-ink-secondary);
+}
+
+.sr-codex-copy {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: var(--sr-ink);
+}
+
+.sr-codex-glossary-term {
+  margin: 0 0 0.75rem;
+  font-family: var(--sr-font-display);
+  font-size: 1.12rem;
+  color: var(--sr-amber);
+}
+
+.sr-codex-empty {
+  color: var(--sr-ink-secondary);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+@media (max-width: 680px) {
+  .sr-codex-drawer {
+    width: 100vw;
+    border-left: 0;
+  }
+  .sr-codex-header,
+  .sr-codex-body {
+    padding-inline: 1rem;
+  }
+}

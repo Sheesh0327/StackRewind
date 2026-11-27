@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    try {
+      const stored = localStorage.getItem("sr-color-scheme");
+      if (stored === "light" || stored === "dark") {
+        document.querySelector('meta[name="color-scheme"]').content = stored;
+      }
+    } catch {}
+  </script>
+  <title>StackRewind</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/codex.css">
+  <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+  <header class="sr-masthead">
+    <div class="sr-masthead-inner">
+      <a href="#networking/ch1/1" class="sr-brand" aria-label="StackRewind Home">
+        <span id="brand-name" class="sr-brand-name">StackRewind</span>
+        <span id="brand-tagline" class="sr-brand-tagline">Rewind the stack to the problem that created it.</span>
+      </a>
+
+      <div class="sr-masthead-actions">
+        <div id="archive-switcher" class="sr-switcher">
+          <button
+            type="button"
+            id="switcher-toggle"
+            class="sr-btn sr-btn-ghost"
+            aria-expanded="false"
+            aria-controls="switcher-menu"
+          >
+            <span class="sr-switcher-label" id="switcher-current-label">Archive</span>
+            <span aria-hidden="true" class="sr-caret">▾</span>
+          </button>
+          <div id="switcher-menu" class="sr-switcher-menu" role="region" aria-label="Archive Switcher" hidden></div>
+        </div>
+
+        <button type="button" id="theme-toggle" class="sr-btn sr-btn-ghost sr-theme-toggle">
+          <span class="sr-theme-opt sr-theme-opt-light">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"></path>
+            </svg>
+            <span class="sr-theme-label" aria-hidden="true">Light</span>
+            <span class="sr-visually-hidden">Switch to light theme</span>
+          </span>
+          <span class="sr-theme-opt sr-theme-opt-dark">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span class="sr-theme-label" aria-hidden="true">Dark</span>
+            <span class="sr-visually-hidden">Switch to dark theme</span>
+          </span>
+        </button>
+
+        <button type="button" id="glossary-btn" class="sr-btn sr-btn-ghost" disabled>
+          Chapter Glossary
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="sr-main" id="reader-main">
+    <section id="cover-card" class="sr-cover" aria-labelledby="cover-title">
+      <div class="sr-cover-dossier">
+        <div class="sr-cover-meta">
+          <span id="cover-volume-badge" class="sr-badge">Volume 1 · Networking</span>
+          <span id="cover-era" class="sr-era">1960–1969</span>
+        </div>
+        <h1 id="cover-title" class="sr-cover-title">Loading Cartridge…</h1>
+        <p id="cover-subtitle" class="sr-cover-subtitle"></p>
+        <p id="cover-tagline" class="sr-cover-tagline"></p>
+        <div class="sr-cover-actions">
+          <button type="button" id="start-chapter-btn" class="sr-btn sr-btn-primary">
+            Start Chapter
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="reader-view" class="sr-reader" aria-label="Comic Reader" hidden>
+      <div class="sr-stage-frame">
+        <span class="sr-tick sr-tick-tl" aria-hidden="true"></span>
+        <span class="sr-tick sr-tick-tr" aria-hidden="true"></span>
+        <span class="sr-tick sr-tick-bl" aria-hidden="true"></span>
+        <span class="sr-tick sr-tick-br" aria-hidden="true"></span>
+        <div id="panel-stage" class="sr-stage" role="region" aria-label="Comic Panel"></div>
+      </div>
+
+      <section class="sr-dialogue-tray" aria-label="Dialogue and Narration" aria-live="polite">
+        <div class="sr-dialogue-header">
+          <span id="page-speaker" class="sr-speaker-badge"></span>
+          <span id="page-title" class="sr-scene-title"></span>
+        </div>
+        <p id="page-dialogue" class="sr-dialogue-copy"></p>
+      </section>
+
+      <footer class="sr-control-bar" aria-label="Playback and Pagination">
+        <div class="sr-audio-controls">
+          <button type="button" id="audio-play-btn" class="sr-btn sr-btn-compact" disabled>
+            Play
+          </button>
+          <button type="button" id="audio-replay-btn" class="sr-btn sr-btn-compact" disabled>
+            Replay
+          </button>
+          <input
+            type="range"
+            id="audio-scrubber"
+            class="sr-scrubber"
+            min="0"
+            max="100"
+            step="0.1"
+            value="0"
+            aria-label="Narration timeline"
+            disabled
+          >
+          <span id="audio-status" class="sr-audio-status">Audio not yet loaded</span>
+        </div>
+
+        <nav class="sr-page-nav" aria-label="Page Navigation">
+          <button type="button" id="prev-page-btn" class="sr-btn sr-btn-compact" disabled>
+            Prev
+          </button>
+          <span id="page-indicator" class="sr-page-indicator">Page 1 / 1</span>
+          <button type="button" id="next-page-btn" class="sr-btn sr-btn-compact" disabled>
+            Next
+          </button>
+        </nav>
+      </footer>
+    </section>
+  </main>
+
+  <dialog id="codex-drawer" class="sr-codex-drawer" closedby="any" aria-labelledby="codex-title">
+    <div class="sr-codex-surface">
+      <header class="sr-codex-header">
+        <div class="sr-codex-heading-group">
+          <span id="codex-eyebrow" class="sr-codex-eyebrow">Active Codex</span>
+          <h2 id="codex-title" class="sr-codex-title">Term</h2>
+        </div>
+        <button type="button" id="codex-close-btn" class="sr-btn sr-btn-ghost sr-codex-close" aria-label="Close Codex Drawer">
+          Close
+        </button>
+      </header>
+      <div id="codex-body" class="sr-codex-body"></div>
+    </div>
+  </dialog>
+</body>
+</html>

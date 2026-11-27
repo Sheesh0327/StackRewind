@@ -1,0 +1,127 @@
+{
+  "volumeId": "networking",
+  "chapterId": "ch1",
+  "chapterNumber": 1,
+  "assetPrefix": "net-ch1",
+  "era": "1960-1969",
+  "title": "Why Packets Exist",
+  "subtitle": "How computers learned to share a line.",
+  "pages": [
+    {
+      "page": 1,
+      "panelType": "svg-scene",
+      "sceneModule": "net-ch1-p01",
+      "title": "The Briefing",
+      "speaker": "The Guide",
+      "dialogue": "Pull up a chair and watch that flat line. Without a [[Network Protocol|network-protocol]], two machines staring across a wire only see raw voltage pulses—no idea where a message starts, who owns it, or whether noise flipped a bit. Protocols solve this by stamping strict frame boundaries, sequence rules, and error checks onto every signal. To understand why the modern Internet breaks data into tiny pieces, rewind to the system that broke under pressure.",
+      "tts": "Pull up a chair and watch that flat line. Without a Network Protocol, two machines staring across a wire only see raw voltage pulses—no idea where a message starts, who owns it, or whether noise flipped a bit. Protocols solve this by stamping strict frame boundaries, sequence rules, and error checks onto every signal. To understand why the modern Internet breaks data into tiny pieces, rewind to the system that broke under pressure.",
+      "sceneNotes": "First-person view at the archive desk. The Guide slides a disconnected patch cord and a blank blueprint into the amber lamp light."
+    },
+    {
+      "page": 2,
+      "panelType": "svg-scene",
+      "sceneModule": "net-ch1-p02",
+      "title": "Rewind to 1960",
+      "speaker": "The Guide",
+      "dialogue": "Spin the dial back to 1960. The [[Analog Telephone Network|analog-telephone-network]] carries voices by locking an unbroken electrical path from caller to listener until someone hangs up. Human speech fills that path steadily, so keeping it dedicated works. Computers behave differently: they fire off a millisecond burst of data, then sit silent for seconds while you read or type—leaving over ninety percent of that expensive copper trunk completely idle.",
+      "tts": "Spin the dial back to 1960. The Analog Telephone Network carries voices by locking an unbroken electrical path from caller to listener until someone hangs up. Human speech fills that path steadily, so keeping it dedicated works. Computers behave differently: they fire off a millisecond burst of data, then sit silent for seconds while you read or type—leaving over ninety percent of that expensive copper trunk completely idle.",
+      "sceneNotes": "The same desk opens onto an electromechanical exchange. The reader holds a rotary telephone handset while the Guide points to a route on a paper map."
+    },
+    {
+      "page": 3,
+      "panelType": "svg-scene",
+      "sceneModule": "net-ch1-p03",
+      "title": "The Circuit Switching Trap",
+      "speaker": "The Guide",
+      "dialogue": "Dialing triggers electromechanical relays across every intermediate exchange to latch shut, and [[Circuit Switching|circuit-switching]] reserves that entire copper chain exclusively for one session. Even during long silent gaps, Computer C gets a busy signal and cannot borrow the unused wire. Worse, every switch along the path is a single point of failure: knock out Exchange 2 in the middle and the whole reserved connection drops dead instantly.",
+      "tts": "Dialing triggers electromechanical relays across every intermediate exchange to latch shut, and Circuit Switching reserves that entire copper chain exclusively for one session. Even during long silent gaps, Computer C gets a busy signal and cannot borrow the unused wire. Worse, every switch along the path is a single point of failure: knock out Exchange 2 in the middle and the whole reserved connection drops dead instantly.",
+      "sceneNotes": "Trace a reserved circuit through three exchanges. Hold the highlight through silence, then break the path at the middle exchange."
+    },
+    {
+      "page": 4,
+      "panelType": "svg-scene",
+      "sceneModule": "net-ch1-p04",
+      "title": "Paul Baran's Survivable Mesh",
+      "speaker": "The Guide",
+      "dialogue": "Between 1960 and 1964, Paul Baran solved both bottlenecks with a [[Distributed Mesh|distributed-mesh]] where switches link to multiple neighbors. Instead of reserving a line, the sender chops data into 1,024-bit [[Message Blocks|message-blocks]], stamping each block's destination address and sequence number onto its header. Using [[Hot-Potato Routing|hot-potato-routing]], each switch checks a tiny local hop table and immediately hands the block to its best surviving neighbor—so when a hub dies, blocks detour automatically without a central map.",
+      "tts": "Between 1960 and 1964, Paul Baran solved both bottlenecks with a Distributed Mesh where switches link to multiple neighbors. Instead of reserving a line, the sender chops data into 1,024-bit Message Blocks, stamping each block's destination address and sequence number onto its header. Using Hot-Potato Routing, each switch checks a tiny local hop table and immediately hands the block to its best surviving neighbor—so when a hub dies, blocks detour automatically without a central map.",
+      "sceneNotes": "Show several possible routes. A hub goes dark and the next block moves hop by hop along a surviving route."
+    },
+    {
+      "page": 5,
+      "panelType": "svg-scene",
+      "sceneModule": "net-ch1-p05",
+      "title": "Queueing Math & The Word 'Packet'",
+      "speaker": "The Guide",
+      "dialogue": "In 1961, Leonard Kleinrock proved with [[Queueing Theory|queueing-theory]] that sharing one fast trunk beats splitting lines into slow dedicated slices. When Terminal A and Terminal B burst simultaneously, a short FIFO memory buffer holds the extra chunks in line, then drains them into the quiet gaps right behind—achieving statistical multiplexing without collisions. In 1966, Donald Davies standardized each self-addressed chunk as a [[Packet|packet]], pairing a routing header with a clean payload slice.",
+      "tts": "In 1961, Leonard Kleinrock proved with Queueing Theory that sharing one fast trunk beats splitting lines into slow dedicated slices. When Terminal A and Terminal B burst simultaneously, a short FIFO memory buffer holds the extra chunks in line, then drains them into the quiet gaps right behind—achieving statistical multiplexing without collisions. In 1966, Donald Davies standardized each self-addressed chunk as a Packet, pairing a routing header with a clean payload slice.",
+      "sceneNotes": "Two terminals send bursts into a short queue. Alternate their chunks on one link and show the queue grow when both send at once."
+    },
+    {
+      "page": 6,
+      "panelType": "svg-scene",
+      "sceneModule": "net-ch1-p06",
+      "title": "ARPANET 1969 & The Next Crisis",
+      "speaker": "The Guide",
+      "dialogue": "In 1969, [[ARPANET|arpanet]] solved mainframe incompatibility by placing a dedicated Interface Message Processor—an IMP minicomputer—in front of every host to slice, header, and forward packets automatically. The October 29 login crashed SRI's host buffer after typing L and O, yet by December four sites—UCLA, SRI, UCSB, and Utah—were routing packets across the map. That success raised the next physical problem: when two hosts share one wire and transmit at the exact same instant, their signals collide.",
+      "tts": "In 1969, ARPANET solved mainframe incompatibility by placing a dedicated Interface Message Processor—an IMP minicomputer—in front of every host to slice, header, and forward packets automatically. The October 29 login crashed SRI's host buffer after typing L and O, yet by December four sites—UCLA, SRI, UCSB, and Utah—were routing packets across the map. That success raised the next physical problem: when two hosts share one wire and transmit at the exact same instant, their signals collide.",
+      "sceneNotes": "An October login record sits beside a separate December four-site map. The Guide taps a sketch of a shared wire as two signals converge."
+    }
+  ],
+  "codex": {
+    "network-protocol": {
+      "term": "Network Protocol",
+      "plainEnglish": "A strict state-and-format contract between two machines that defines bit timing, frame start/end markers, header fields (source, destination, length), and checksum or acknowledgment rules for handling corrupted or missing data.",
+      "whyItWasInvented": "Without shared framing and error rules, electrical noise or slightly different clock speeds turn a stream of bits into unreadable garbage with no way to recover.",
+      "realWorldSighting": "Your browser uses HTTP/3 over QUIC and TLS to negotiate encryption, request web assets, and retransmit only lost chunks without stalling other files."
+    },
+    "analog-telephone-network": {
+      "term": "Analog Telephone Network",
+      "plainEnglish": "A voice network where a microphone turns air pressure waves into proportional electrical voltage, carried over a continuous copper loop switched by local and trunk telephone exchanges.",
+      "whyItWasInvented": "Humans needed low-latency voice conversation across cities; continuous analog circuits delivered steady waveform fidelity once an operator or electromechanical exchange bridged the two wires.",
+      "realWorldSighting": "Legacy fax machines and analog desk phones still plug into FXS ports on modern fiber routers, which sample the analog wave into digital packets."
+    },
+    "circuit-switching": {
+      "term": "Circuit Switching",
+      "plainEnglish": "A connection model that allocates an exclusive end-to-end physical or time-slot channel during call setup, holds every intermediate relay locked for the entire session, and tears the path down only when disconnected.",
+      "whyItWasInvented": "Early voice exchanges had no digital memory to store and reorder speech, so reserving a dedicated wire guaranteed predictable, uninterrupted audio delivery.",
+      "realWorldSighting": "Classic PSTN landline calls and optical SONET/DWDM leased wavelengths still reserve dedicated end-to-end capacity for real-time carriers."
+    },
+    "distributed-mesh": {
+      "term": "Distributed Mesh",
+      "plainEnglish": "A network topology where each switching node connects to multiple neighbors (redundancy level R >= 3) instead of funneling traffic through a single hierarchical backbone hub, creating several independent paths between any two endpoints.",
+      "whyItWasInvented": "Paul Baran modeled Cold War survivability at RAND and proved centralized star networks collapse if one central hub fails, whereas distributed meshes stay connected even after heavy node loss.",
+      "realWorldSighting": "Tier-1 Internet backbones, municipal Wi-Fi meshes, and multi-AZ cloud spine-leaf data centers all wire redundant cross-links so single fiber cuts reroute automatically."
+    },
+    "message-blocks": {
+      "term": "Message Blocks",
+      "plainEnglish": "Paul Baran's fixed-size 1,024-bit data units that split long computer files into uniform slices, each wrapped with a destination tag, source address, sequence number, and error-check field.",
+      "whyItWasInvented": "Fixed small blocks prevented one giant file transfer from monopolizing a link and allowed switches to route individual slices independently around damaged lines.",
+      "realWorldSighting": "Ethernet frames (up to 1,500-byte MTU) and IPv4/IPv6 datagrams descend directly from Baran's fixed-ceiling block architecture."
+    },
+    "hot-potato-routing": {
+      "term": "Hot-Potato Routing",
+      "plainEnglish": "A decentralized forwarding rule where each switch maintains a dynamic local table of hop counts to destinations, immediately forwarding every arriving block out the intact link with the lowest estimated hops—or the next best neighbor if a link fails.",
+      "whyItWasInvented": "Waiting for a central controller to recompute global routes takes too long during link failures; local hop-by-hop decisions let surviving nodes adapt instantaneously.",
+      "realWorldSighting": "OSPF and BGP routers forward packets hop by hop using local routing tables, and backbone ISPs use hot-potato exit rules to hand off external traffic at the nearest peering point."
+    },
+    "queueing-theory": {
+      "term": "Queueing Theory",
+      "plainEnglish": "The mathematical analysis of arrival rates, service capacity, and waiting-line buffers (like M/M/1 queues), proving that pooling arrivals into one high-speed shared buffer cuts average waiting delay compared to isolated slow channels.",
+      "whyItWasInvented": "Engineers needed mathematical proof that random, bursty computer traffic would not deadlock or drop catastrophically when multiplexed onto shared links without dedicated circuits.",
+      "realWorldSighting": "Cloud load balancers, Linux tc/FQ-CoDel packet schedulers, and router egress buffers use queueing math daily to prevent bufferbloat and smooth traffic spikes."
+    },
+    "packet": {
+      "term": "Packet",
+      "plainEnglish": "A discrete, self-contained unit of digital data combining a structured control header (source, destination, length, flags) with a variable-length payload chunk so network switches can interleave traffic from many senders.",
+      "whyItWasInvented": "Donald Davies coined the term at Britain's NPL to describe small store-and-forward units that let hundreds of interactive terminal users share one fast trunk during idle gaps.",
+      "realWorldSighting": "Every time you load a web page or join a video call, Wireshark captures thousands of TCP/UDP packets carrying IP headers and 1-kilobyte payload chunks."
+    },
+    "arpanet": {
+      "term": "ARPANET",
+      "plainEnglish": "The 1969 packet-switched wide-area network that offloaded routing, buffering, and error control onto dedicated Honeywell IMP minicomputers sitting in front of diverse university mainframes.",
+      "whyItWasInvented": "Research labs ran incompatible operating systems and could not afford dedicated cross-country telephone lines; IMPs gave every mainframe a uniform packet interface over shared 50 kbps lines.",
+      "realWorldSighting": "Every modern home router acts as a miniature descendant of the ARPANET IMP, translating your devices' traffic into routed IP packets across the Internet."
+    }
+  }
+}
