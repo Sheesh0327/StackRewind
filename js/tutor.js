@@ -4,6 +4,10 @@ const STORAGE_KEY = "sr-tutor-provider";
 const TOKEN_RE = /\[\[([^\]|]+)\|([^\]]+)\]\]/g;
 export const MAX_ENCODED_URL_CHARS = 1950;
 
+function hasOwn(obj, key) {
+  return Boolean(obj) && Object.prototype.hasOwnProperty.call(obj, key);
+}
+
 export const PROVIDERS = {
   chatgpt: {
     id: "chatgpt",
@@ -42,17 +46,21 @@ let supportsDisplayTransition;
 
 function canTransitionDisplay() {
   if (supportsDisplayTransition !== undefined) return supportsDisplayTransition;
-  if (!window.CSS?.supports?.("transition-behavior", "allow-discrete") || !document.body) {
+  try {
+    if (!window.CSS?.supports?.("transition-behavior", "allow-discrete") || !document.body) {
+      return false;
+    }
+    const probe = document.createElement("div");
+    probe.style.cssText = "transition: display 1s allow-discrete !important; display: block;";
+    document.body.appendChild(probe);
+    getComputedStyle(probe).display;
+    probe.style.display = "none";
+    supportsDisplayTransition = getComputedStyle(probe).display === "block";
+    probe.remove();
+    return supportsDisplayTransition;
+  } catch {
     return false;
   }
-  const probe = document.createElement("div");
-  probe.style.cssText = "transition: display 1s allow-discrete !important; display: block;";
-  document.body.appendChild(probe);
-  getComputedStyle(probe).display;
-  probe.style.display = "none";
-  supportsDisplayTransition = getComputedStyle(probe).display === "block";
-  probe.remove();
-  return supportsDisplayTransition;
 }
 
 function supportsTopLayerExit() {
@@ -62,7 +70,7 @@ function supportsTopLayerExit() {
 function readStoredProvider() {
   try {
     const val = localStorage.getItem(STORAGE_KEY);
-    return val && Object.hasOwn(PROVIDERS, val) ? val : "chatgpt";
+    return val && hasOwn(PROVIDERS, val) ? val : "chatgpt";
   } catch {
     return "chatgpt";
   }
@@ -86,7 +94,7 @@ export function collectPageCodexEntries(chapter, page) {
   const seen = new Set();
   const entries = [];
   for (const termId of extractTermIds(page?.dialogue || "")) {
-    if (seen.has(termId) || !Object.hasOwn(codex, termId)) continue;
+    if (seen.has(termId) || !hasOwn(codex, termId)) continue;
     seen.add(termId);
     const entry = codex[termId];
     if (entry?.term) entries.push({ id: termId, ...entry });
@@ -291,10 +299,12 @@ export function createTutorController({
   let activeProviderId = readStoredProvider();
 
   async function closeDrawer() {
-    if (!dialogEl.open) return;
+    if (!dialogEl.open && !dialogEl.hasAttribute("open")) return;
     if (!supportsTopLayerExit()) {
       dialogEl.setAttribute("data-closing", "");
-      const animations = dialogEl.getAnimations({ subtree: true });
+      const animations = typeof dialogEl.getAnimations === "function"
+        ? dialogEl.getAnimations({ subtree: true })
+        : [];
       if (animations.length > 0) {
         await Promise.race([
           Promise.allSettled(animations.map((a) => a.finished)),
@@ -304,7 +314,12 @@ export function createTutorController({
       if (!dialogEl.hasAttribute("data-closing")) return;
       dialogEl.removeAttribute("data-closing");
     }
-    dialogEl.close();
+    if (typeof dialogEl.close === "function" && dialogEl.open) {
+      dialogEl.close();
+    } else {
+      dialogEl.removeAttribute("open");
+      onAfterClose?.();
+    }
   }
 
   // Fallback light-dismiss for browsers without <dialog closedby="any">
@@ -385,7 +400,9 @@ export function createTutorController({
     const provider = getProvider();
     const radios = formEl.querySelectorAll('input[name="tutor-provider"]');
     for (const radio of radios) {
-      radio.checked = radio.value === provider.id;
+      const selected = radio.value === provider.id;
+      radio.checked = selected;
+      radio.closest(".sr-tutor-provider-option")?.classList.toggle("is-selected", selected);
     }
     providerHintEl.textContent = provider.hint;
     submitBtn.textContent = provider.cta;
@@ -532,7 +549,7 @@ export function createTutorController({
 
   formEl.addEventListener("change", (event) => {
     const target = event.target;
-    if (target?.name === "tutor-provider" && Object.hasOwn(PROVIDERS, target.value)) {
+    if (target?.name === "tutor-provider" && hasOwn(PROVIDERS, target.value)) {
       activeProviderId = target.value;
       writeStoredProvider(activeProviderId);
       clearStatus();
@@ -603,17 +620,29 @@ export function createTutorController({
     },
 
     isOpen() {
-      return dialogEl.open;
+      return Boolean(dialogEl.open || dialogEl.hasAttribute("open"));
     },
 
     open() {
-      if (!dialogEl.open) {
+      if (!dialogEl.open && !dialogEl.hasAttribute("open")) {
         onBeforeOpen?.();
         dialogEl.removeAttribute("data-closing");
         clearStatus();
         updatePreview();
-        dialogEl.showModal();
-        questionEl.focus();
+        try {
+          if (typeof dialogEl.showModal === "function") {
+            dialogEl.showModal();
+          } else {
+            dialogEl.setAttribute("open", "");
+          }
+        } catch {
+          dialogEl.setAttribute("open", "");
+        }
+        try {
+          questionEl.focus();
+        } catch {
+          // Ignore focus errors if element is not yet focusable.
+        }
       }
     },
 

@@ -1,9 +1,16 @@
 /* Dialogue Header Trigger */
 .sr-tutor-trigger {
+  position: relative;
+  z-index: 2;
   color: var(--sr-amber);
   background: var(--sr-amber-soft);
   border-color: var(--sr-amber-line);
   flex-shrink: 0;
+  touch-action: manipulation;
+}
+
+.sr-tutor-trigger > * {
+  pointer-events: none;
 }
 
 .sr-tutor-trigger:hover:not(:disabled) {
@@ -16,6 +23,11 @@
 .sr-tutor-drawer {
   width: min(460px, 100%);
   max-width: 100%;
+}
+
+.sr-tutor-drawer[open]:not([data-closing]) {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .sr-tutor-body {
@@ -176,6 +188,8 @@
   position: absolute;
   opacity: 0;
   inset: 0;
+  width: 100%;
+  height: 100%;
   margin: 0;
   cursor: pointer;
 }
@@ -186,6 +200,7 @@
   color: var(--sr-ink);
 }
 
+.sr-tutor-provider-option.is-selected,
 .sr-tutor-provider-option:has(input:checked) {
   background: var(--sr-amber-soft);
   border-color: var(--sr-amber);

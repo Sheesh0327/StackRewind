@@ -2,7 +2,7 @@ import { createAudioController } from "./audio.js";
 import { createCodexController } from "./codex.js";
 import { extractTermIds, parseDialogueToFragment } from "./parser.js";
 import { initThemePicker } from "./theme.js";
-import { createTutorController } from "./tutor.js";
+import { createTutorController } from "./tutor.js?v=20261127-2";
 
 const els = {
   brandName: document.getElementById("brand-name"),
@@ -502,6 +502,7 @@ function goNext() {
 
 async function init() {
   initThemePicker(els.themeToggle);
+  els.askTutorBtn?.addEventListener("click", () => tutor.open());
 
   const res = await fetch("content/manifest.json");
   state.manifest = await res.json();
@@ -519,6 +520,10 @@ async function init() {
   });
 
   document.addEventListener("click", (event) => {
+    if (event.target?.closest?.("#ask-tutor-btn")) {
+      tutor.open();
+      return;
+    }
     if (!els.switcherMenu.hidden && !event.target.closest("#archive-switcher")) {
       closeSwitcher();
     }
@@ -552,7 +557,6 @@ async function init() {
   els.prevBtn.addEventListener("click", goPrev);
   els.nextBtn.addEventListener("click", goNext);
   els.glossaryBtn.addEventListener("click", () => codex.openGlossary());
-  els.askTutorBtn.addEventListener("click", () => tutor.open());
   els.deepDiveLink.addEventListener("click", () => {
     audio.pauseForOverlay();
   });
