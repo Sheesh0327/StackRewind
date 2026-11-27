@@ -713,6 +713,14 @@ body {
   margin-bottom: 0.55rem;
 }
 
+.sr-dialogue-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.75rem;
+  min-width: 0;
+}
+
 .sr-speaker-badge {
   font-family: var(--sr-font-mono);
   font-size: 0.76rem;

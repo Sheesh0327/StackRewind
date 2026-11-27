@@ -2,6 +2,7 @@ import { createAudioController } from "./audio.js";
 import { createCodexController } from "./codex.js";
 import { extractTermIds, parseDialogueToFragment } from "./parser.js";
 import { initThemePicker } from "./theme.js";
+import { createTutorController } from "./tutor.js";
 
 const els = {
   brandName: document.getElementById("brand-name"),
@@ -39,6 +40,21 @@ const els = {
   codexTitle: document.getElementById("codex-title"),
   codexBody: document.getElementById("codex-body"),
   codexCloseBtn: document.getElementById("codex-close-btn"),
+  askTutorBtn: document.getElementById("ask-tutor-btn"),
+  tutorDialog: document.getElementById("tutor-drawer"),
+  tutorCloseBtn: document.getElementById("tutor-close-btn"),
+  tutorForm: document.getElementById("tutor-form"),
+  tutorContextPill: document.getElementById("tutor-context-pill"),
+  tutorContextTerms: document.getElementById("tutor-context-terms"),
+  tutorChips: document.getElementById("tutor-chips"),
+  tutorQuestion: document.getElementById("tutor-question"),
+  tutorProviderHint: document.getElementById("tutor-provider-hint"),
+  tutorStatus: document.getElementById("tutor-status"),
+  tutorSubmitBtn: document.getElementById("tutor-submit-btn"),
+  tutorCopyBtn: document.getElementById("tutor-copy-btn"),
+  tutorPreviewDetails: document.getElementById("tutor-preview-details"),
+  tutorBudgetBadge: document.getElementById("tutor-budget-badge"),
+  tutorPreviewText: document.getElementById("tutor-preview-text"),
 };
 
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -65,22 +81,45 @@ const audio = createAudioController({
   onReplay: () => state.activeScene?.replay?.(),
 });
 
+function pauseForModalOverlay() {
+  state.wasAudioPlayingBeforeCodex = audio.pauseForOverlay();
+  state.activeScene?.pause?.();
+}
+
+function resumeAfterModalOverlay() {
+  if (!state.wasAudioPlayingBeforeCodex) {
+    state.activeScene?.resume?.();
+  }
+  state.wasAudioPlayingBeforeCodex = false;
+}
+
 const codex = createCodexController({
   dialogEl: els.codexDialog,
   eyebrowEl: els.codexEyebrow,
   titleEl: els.codexTitle,
   bodyEl: els.codexBody,
   closeBtn: els.codexCloseBtn,
-  onBeforeOpen: () => {
-    state.wasAudioPlayingBeforeCodex = audio.pauseForOverlay();
-    state.activeScene?.pause?.();
-  },
-  onAfterClose: () => {
-    if (!state.wasAudioPlayingBeforeCodex) {
-      state.activeScene?.resume?.();
-    }
-    state.wasAudioPlayingBeforeCodex = false;
-  },
+  onBeforeOpen: pauseForModalOverlay,
+  onAfterClose: resumeAfterModalOverlay,
+});
+
+const tutor = createTutorController({
+  dialogEl: els.tutorDialog,
+  closeBtn: els.tutorCloseBtn,
+  formEl: els.tutorForm,
+  contextPillEl: els.tutorContextPill,
+  contextTermsEl: els.tutorContextTerms,
+  chipsEl: els.tutorChips,
+  questionEl: els.tutorQuestion,
+  providerHintEl: els.tutorProviderHint,
+  statusEl: els.tutorStatus,
+  submitBtn: els.tutorSubmitBtn,
+  copyBtn: els.tutorCopyBtn,
+  previewDetailsEl: els.tutorPreviewDetails,
+  budgetBadgeEl: els.tutorBudgetBadge,
+  previewTextEl: els.tutorPreviewText,
+  onBeforeOpen: pauseForModalOverlay,
+  onAfterClose: resumeAfterModalOverlay,
 });
 
 function validateCartridgeChapter(chapter, dataPath) {
@@ -326,6 +365,12 @@ async function renderPage() {
   els.dialogue.replaceChildren(
     parseDialogueToFragment(page.dialogue, state.chapter.codex, (termId) => codex.openTerm(termId))
   );
+  tutor.setContext({
+    volume: state.volume,
+    chapter: state.chapter,
+    page,
+    pageIndex: state.pageIndex,
+  });
 
   if (page.deepDive && isValidYouTubeUrl(page.deepDive.url)) {
     const dd = page.deepDive;
@@ -485,7 +530,7 @@ async function init() {
       els.switcherToggle.focus();
       return;
     }
-    if (codex.isOpen() || !state.entered) return;
+    if (codex.isOpen() || tutor.isOpen() || !state.entered) return;
     if (event.metaKey || event.ctrlKey || event.altKey) return;
     const tag = event.target?.tagName;
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
@@ -507,6 +552,7 @@ async function init() {
   els.prevBtn.addEventListener("click", goPrev);
   els.nextBtn.addEventListener("click", goNext);
   els.glossaryBtn.addEventListener("click", () => codex.openGlossary());
+  els.askTutorBtn.addEventListener("click", () => tutor.open());
   els.deepDiveLink.addEventListener("click", () => {
     audio.pauseForOverlay();
   });

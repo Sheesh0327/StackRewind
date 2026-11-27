@@ -15,6 +15,7 @@
   <title>StackRewind</title>
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/codex.css">
+  <link rel="stylesheet" href="./css/tutor.css">
   <script type="module" src="./js/app.js"></script>
 </head>
 <body>
@@ -94,8 +95,22 @@
 
       <section class="sr-dialogue-tray" aria-label="Dialogue and Narration" aria-live="polite">
         <div class="sr-dialogue-header">
-          <span id="page-speaker" class="sr-speaker-badge"></span>
-          <span id="page-title" class="sr-scene-title"></span>
+          <div class="sr-dialogue-meta">
+            <span id="page-speaker" class="sr-speaker-badge"></span>
+            <span id="page-title" class="sr-scene-title"></span>
+          </div>
+          <button
+            type="button"
+            id="ask-tutor-btn"
+            class="sr-btn sr-btn-compact sr-tutor-trigger"
+            aria-haspopup="dialog"
+            aria-controls="tutor-drawer"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span>Ask AI</span>
+          </button>
         </div>
         <p id="page-dialogue" class="sr-dialogue-copy"></p>
         <div id="page-deep-dive" class="sr-deep-dive" hidden>
@@ -166,6 +181,91 @@
         </button>
       </header>
       <div id="codex-body" class="sr-codex-body"></div>
+    </div>
+  </dialog>
+
+  <dialog id="tutor-drawer" class="sr-codex-drawer sr-tutor-drawer" closedby="any" aria-labelledby="tutor-title">
+    <div class="sr-codex-surface sr-tutor-surface">
+      <header class="sr-codex-header">
+        <div class="sr-codex-heading-group">
+          <span id="tutor-eyebrow" class="sr-codex-eyebrow">AI Tutor Handoff</span>
+          <h2 id="tutor-title" class="sr-codex-title">Ask About This Page</h2>
+        </div>
+        <button type="button" id="tutor-close-btn" class="sr-btn sr-btn-ghost sr-codex-close" aria-label="Close AI Tutor Drawer">
+          Close
+        </button>
+      </header>
+
+      <form id="tutor-form" class="sr-codex-body sr-tutor-body" novalidate>
+        <div class="sr-tutor-context-card">
+          <span class="sr-tutor-section-label">Active Page Context</span>
+          <p id="tutor-context-pill" class="sr-tutor-context-pill">Volume 1 · Chapter 1 · Page 1</p>
+          <p id="tutor-context-terms" class="sr-tutor-context-terms"></p>
+        </div>
+
+        <div class="sr-tutor-field">
+          <span class="sr-tutor-section-label" id="tutor-chips-label">Starter Questions</span>
+          <div id="tutor-chips" class="sr-tutor-chips" role="group" aria-labelledby="tutor-chips-label"></div>
+        </div>
+
+        <div class="sr-tutor-field">
+          <div class="sr-tutor-label-row">
+            <label for="tutor-question" class="sr-tutor-section-label">Your Question</label>
+            <span class="sr-tutor-shortcut-hint">Ctrl/Cmd + Enter to send</span>
+          </div>
+          <textarea
+            id="tutor-question"
+            class="sr-tutor-textarea"
+            rows="3"
+            placeholder="Ask how this mechanism works, why it was designed this way, or how it shows up today…"
+            required
+          ></textarea>
+        </div>
+
+        <fieldset class="sr-tutor-fieldset">
+          <legend class="sr-tutor-section-label">Open In</legend>
+          <div class="sr-tutor-providers" role="radiogroup" aria-label="AI Chat Provider">
+            <label class="sr-tutor-provider-option">
+              <input type="radio" name="tutor-provider" value="chatgpt" checked>
+              <span>ChatGPT</span>
+            </label>
+            <label class="sr-tutor-provider-option">
+              <input type="radio" name="tutor-provider" value="claude">
+              <span>Claude</span>
+            </label>
+            <label class="sr-tutor-provider-option">
+              <input type="radio" name="tutor-provider" value="gemini">
+              <span>Gemini</span>
+            </label>
+            <label class="sr-tutor-provider-option">
+              <input type="radio" name="tutor-provider" value="copy">
+              <span>Copy Only</span>
+            </label>
+          </div>
+          <p id="tutor-provider-hint" class="sr-tutor-provider-hint">
+            Opens ChatGPT in a new tab with this page's context and your question prefilled (and copies the prompt as a backup).
+          </p>
+        </fieldset>
+
+        <div id="tutor-status" class="sr-tutor-status" role="status" aria-live="polite" hidden></div>
+
+        <div class="sr-tutor-actions">
+          <button type="submit" id="tutor-submit-btn" class="sr-btn sr-btn-primary sr-tutor-submit">
+            Send to ChatGPT
+          </button>
+          <button type="button" id="tutor-copy-btn" class="sr-btn sr-btn-ghost">
+            Copy Prompt
+          </button>
+        </div>
+
+        <details id="tutor-preview-details" class="sr-tutor-preview">
+          <summary class="sr-tutor-preview-summary">
+            <span>Preview assembled prompt</span>
+            <span id="tutor-budget-badge" class="sr-tutor-budget-badge"></span>
+          </summary>
+          <pre id="tutor-preview-text" class="sr-tutor-preview-code"></pre>
+        </details>
+      </form>
     </div>
   </dialog>
 </body>
