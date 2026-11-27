@@ -10,6 +10,8 @@ The reader engine (`index.html`, `css/`, `js/`) is the **Read-Only Console**.
 
 ## 1. Canonical Directory & Asset Conventions
 
+For Networking, use the [volume roadmap](networking/ROADMAP.md) to choose the next chapter and find its research brief. Match the roadmap order against the published manifest and select the first missing chapter before starting chapter authoring. Set the chapter length at storyboard review based on the scenes readers need to understand the mechanism.
+
 ```text
 content/
 ├── README.md
@@ -93,7 +95,13 @@ Each chapter owns its pages, bracket-free `tts` spoken scripts, and complete `co
       "speaker": "The Guide",
       "dialogue": "Every [[Network Protocol|network-protocol]] is a set of rules.",
       "tts": "Every Network Protocol is a set of rules.",
-      "sceneNotes": "16:9 visual choreography notes."
+      "sceneNotes": "16:9 visual choreography notes.",
+      "deepDive": {
+        "title": "Verified YouTube Video Title",
+        "channel": "Channel Name",
+        "url": "https://www.youtube.com/watch?v=XXXXXXXXXXX",
+        "focus": "One-sentence note on which mechanism this video unpacks."
+      }
     }
   ],
   "codex": {
@@ -175,3 +183,17 @@ node scripts/validate-cartridge.mjs
 ```
 
 Validates single-root layout, manifest resolution, chapter schema, word-count density (`30–130` words per page `dialogue`/`tts`, `>= 10` words per `codex` field), codex coverage, bracket-free `tts` parity, 5 SVG lifecycle exports, `--sr-*` scoping, and `.mp3` audio files.
+
+---
+
+## 7. Localhost Multi-Model Authoring Studio (Free Web Chats)
+
+If authoring through free-tier web chat accounts (**ChatGPT** for direction/script/JSON → **Gemini** for fact-checking → **Claude** strictly for SVG animations), launch the zero-dependency Studio GUI and no-cache live preview server:
+
+```sh
+python scripts/author-studio.py
+```
+
+- Opens `/studio` alongside the live local reader (`/#<volume>/<chapterId>/1`) with `Cache-Control: no-store`.
+- Flags: `--port <int>` (default `8765`), `--no-open`, `--compact` (omits full exemplar SVG source in Claude prompts), `--exemplar <path>`.
+- Saving Chapter JSON automatically synthesizes default `edge-tts` audio (`en-US-AndrewMultilingualNeural`) and offers optional Google AI Studio TTS upgrades (via Gemini API or free web `.wav`/`.mp3` import).

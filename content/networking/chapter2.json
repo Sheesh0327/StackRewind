@@ -15,7 +15,13 @@
       "speaker": "The Guide",
       "dialogue": "When multiple hosts share one [[Shared Medium|shared-medium]], whether a copper cable or an open radio channel, transmitting simultaneously merges their signals into unreadable noise. In 1970, Norman Abramson designed ALOHAnet in Hawaii, linking island terminals over a shared inbound UHF radio channel. Under [[Pure ALOHA|pure-aloha]], any terminal transmits whenever ready and waits for a hub acknowledgment; if two bursts overlap by even a single bit across a two-packet window, both garble and retry after random timeouts, capping channel efficiency at 18.4 percent.",
       "tts": "When multiple hosts share one Shared Medium, whether a copper cable or an open radio channel, transmitting simultaneously merges their signals into unreadable noise. In 1970, Norman Abramson designed ALOHAnet in Hawaii, linking island terminals over a shared inbound UHF radio channel. Under Pure ALOHA, any terminal transmits whenever ready and waits for a hub acknowledgment; if two bursts overlap by even a single bit across a two-packet window, both garble and retry after random timeouts, capping channel efficiency at 18.4 percent.",
-      "sceneNotes": "Top half shows Hawaiian island terminals sending amber and teal UHF radio bursts toward the Oahu hub; bottom half shows a rolling time axis where Packet A and Packet B overlap across a 2T crimson vulnerable window (18.4% MAX) before staggered random backoffs let Packet A succeed on retry."
+      "sceneNotes": "Top half shows Hawaiian island terminals sending amber and teal UHF radio bursts toward the Oahu hub; bottom half shows a rolling time axis where Packet A and Packet B overlap across a 2T crimson vulnerable window (18.4% MAX) before staggered random backoffs let Packet A succeed on retry.",
+      "deepDive": {
+        "title": "Pure Aloha",
+        "channel": "Neso Academy",
+        "url": "https://www.youtube.com/watch?v=j4-r0e7DjqY",
+        "focus": "Derives Pure ALOHA's 2T vulnerable window, collision retries, and 18.4% peak throughput."
+      }
     },
     {
       "page": 2,
@@ -25,7 +31,13 @@
       "speaker": "The Guide",
       "dialogue": "Pure ALOHA wasted bandwidth because a late packet could clip the tail of an earlier one already mid-flight. In 1972, Lawrence Roberts introduced [[Slotted ALOHA|slotted-aloha]], dividing time into synchronized discrete slots equal to one packet duration. Terminals may only begin transmitting at the exact tick of a new slot boundary, shrinking the vulnerable overlap window in half and doubling peak throughput to 36.8 percent. Yet blind radios still cannot hear each other mid-air, so two stations picking the same tick still ruin an entire slot.",
       "tts": "Pure ALOHA wasted bandwidth because a late packet could clip the tail of an earlier one already mid-flight. In 1972, Lawrence Roberts introduced Slotted ALOHA, dividing time into synchronized discrete slots equal to one packet duration. Terminals may only begin transmitting at the exact tick of a new slot boundary, shrinking the vulnerable overlap window in half and doubling peak throughput to 36.8 percent. Yet blind radios still cannot hear each other mid-air, so two stations picking the same tick still ruin an entire slot.",
-      "sceneNotes": "Dual-lane comparison timeline: top lane shows an unslotted tail-clip collision (2T, 18.4%); bottom lane locks onto synchronized vertical slot ticks (SLOT 1–5) where A and B align cleanly (36.8% MAX) until Slot 4 when two blind radios start on the same tick and ruin the whole slot in crimson."
+      "sceneNotes": "Dual-lane comparison timeline: top lane shows an unslotted tail-clip collision (2T, 18.4%); bottom lane locks onto synchronized vertical slot ticks (SLOT 1–5) where A and B align cleanly (36.8% MAX) until Slot 4 when two blind radios start on the same tick and ruin the whole slot in crimson.",
+      "deepDive": {
+        "title": "Slotted Aloha",
+        "channel": "Neso Academy",
+        "url": "https://www.youtube.com/watch?v=aqWTNk90zRA",
+        "focus": "Shows how synchronized slot boundaries halve the vulnerable window and double peak throughput to 36.8%."
+      }
     },
     {
       "page": 3,
@@ -35,7 +47,13 @@
       "speaker": "The Guide",
       "dialogue": "In May 1973 at Xerox PARC, Bob Metcalfe and David Boggs needed to wire dozens of Alto workstations to one fast laser printer without a fragile central switch. They ran a single passive [[Coaxial Ether|coaxial-ether]] cable tapped by every machine and paired it with [[CSMA/CD|csma-cd]]. Each transceiver listens for carrier voltage before sending, then monitors the wire while transmitting; if two signals collide, the summed voltage triggers an instant abort and a short jam signal so every host stops wasting wire time immediately.",
       "tts": "In May 1973 at Xerox PARC, Bob Metcalfe and David Boggs needed to wire dozens of Alto workstations to one fast laser printer without a fragile central switch. They ran a single passive Coaxial Ether cable tapped by every machine and paired it with CSMA/CD. Each transceiver listens for carrier voltage before sending, then monitors the wire while transmitting; if two signals collide, the summed voltage triggers an instant abort and a short jam signal so every host stops wasting wire time immediately.",
-      "sceneNotes": "Passive 50-ohm terminated coax bus links Alto A, Alto B, and the EARS laser printer via transceiver taps above a live voltage strip. Alto B defers while sensing Alto A's carrier, then both transmit together, spiking summed collision voltage in crimson to trigger an instant abort and jagged jam signal."
+      "sceneNotes": "Passive 50-ohm terminated coax bus links Alto A, Alto B, and the EARS laser printer via transceiver taps above a live voltage strip. Alto B defers while sensing Alto A's carrier, then both transmit together, spiking summed collision voltage in crimson to trigger an instant abort and jagged jam signal.",
+      "deepDive": {
+        "title": "Carrier Sense Multiple Access (CSMA) – Part 2",
+        "channel": "Neso Academy",
+        "url": "https://www.youtube.com/watch?v=PyLlYQXuxvs",
+        "focus": "Explains carrier sensing, collision detection while transmitting, jam signals, and wired CSMA/CD versus wireless CSMA/CA."
+      }
     },
     {
       "page": 4,
@@ -45,7 +63,13 @@
       "speaker": "The Guide",
       "dialogue": "Aborting a collision only works if both stations do not immediately retransmit in lockstep and collide forever. Ethernet breaks the tie with [[Binary Exponential Backoff|binary-exponential-backoff]]. After its first collision, each host flips a coin to wait zero or one slot time; after the second collision, it picks randomly from zero to three slots, doubling the contention window on each clash up to 1,023 slots. That self-tuning spread lets busy offices sustain over eighty percent link utilization without a master clock, though heavy bursts still spike latency.",
       "tts": "Aborting a collision only works if both stations do not immediately retransmit in lockstep and collide forever. Ethernet breaks the tie with Binary Exponential Backoff. After its first collision, each host flips a coin to wait zero or one slot time; after the second collision, it picks randomly from zero to three slots, doubling the contention window on each clash up to 1,023 slots. That self-tuning spread lets busy offices sustain over eighty percent link utilization without a master clock, though heavy bursts still spike latency.",
-      "sceneNotes": "Host A and Host B state cards feed a contention-window ladder (k=1: 0..1, k=2: 0..3, k=3: 0..7) above a shared wire. Both pick slot 0 on clash 1 and collide again; on clash 2 the window doubles so Host A picks slot 1 and transmits cleanly before Host B follows on slot 3, pushing utilization past 80%."
+      "sceneNotes": "Host A and Host B state cards feed a contention-window ladder (k=1: 0..1, k=2: 0..3, k=3: 0..7) above a shared wire. Both pick slot 0 on clash 1 and collide again; on clash 2 the window doubles so Host A picks slot 1 and transmits cleanly before Host B follows on slot 3, pushing utilization past 80%.",
+      "deepDive": {
+        "title": "Binary Exponential Backoff Algorithm and an Example in Pure ALOHA for Collision Resolution",
+        "channel": "COMNET Protocols",
+        "url": "https://www.youtube.com/watch?v=ZuQsp5-5Q4g",
+        "focus": "Steps through doubling contention windows and randomized slot waits to break lockstep collision ties."
+      }
     },
     {
       "page": 5,
@@ -55,7 +79,13 @@
       "speaker": "The Guide",
       "dialogue": "Because a passive wire broadcasts every electrical pulse to every tap, each host needs hardware rules to separate valid messages from background traffic. Standardized by DIX in 1980 and IEEE 802.3 in 1983, an [[Ethernet Frame|ethernet-frame]] opens with a synchronizing preamble, stamps 48-bit destination and source [[MAC Address|mac-address]] headers, pads short payloads to 64 bytes so distant collisions propagate back in time, and appends a 32-bit CRC checksum. Network cards silently filter unmatched addresses in silicon, keeping CPUs free for real work.",
       "tts": "Because a passive wire broadcasts every electrical pulse to every tap, each host needs hardware rules to separate valid messages from background traffic. Standardized by DIX in 1980 and IEEE 802.3 in 1983, an Ethernet Frame opens with a synchronizing preamble, stamps 48-bit destination and source MAC Address headers, pads short payloads to 64 bytes so distant collisions propagate back in time, and appends a 32-bit CRC checksum. Network cards silently filter unmatched addresses in silicon, keeping CPUs free for real work.",
-      "sceneNotes": "Annotated Ethernet Frame blueprint splits PREAMBLE + SFD (8B), DST MAC (6B), SRC MAC (6B), TYPE / LEN (2B), PAYLOAD + PAD (46–1500B), and CRC-32 FCS (4B), with an explicit lower bracket spanning DST MAC through CRC-32 FCS labeled >=64B MIN FRAME (512 BITS). Below, a broadcast frame is silently dropped by unmatched NICs and accepted by the matching MAC after CRC verification."
+      "sceneNotes": "Annotated Ethernet Frame blueprint splits PREAMBLE + SFD (8B), DST MAC (6B), SRC MAC (6B), TYPE / LEN (2B), PAYLOAD + PAD (46–1500B), and CRC-32 FCS (4B), with an explicit lower bracket spanning DST MAC through CRC-32 FCS labeled >=64B MIN FRAME (512 BITS). Below, a broadcast frame is silently dropped by unmatched NICs and accepted by the matching MAC after CRC verification.",
+      "deepDive": {
+        "title": "Frame formats | Networking tutorial (6 of 13)",
+        "channel": "Ben Eater",
+        "url": "https://www.youtube.com/watch?v=1XrRT0CmzYw",
+        "focus": "Inspects preamble, 48-bit MAC headers, payload padding, and CRC checksums on real Ethernet frames."
+      }
     },
     {
       "page": 6,
@@ -65,7 +95,13 @@
       "speaker": "The Guide",
       "dialogue": "By 1983, IEEE 802.3 turned local office wiring into a global standard, though packing dozens of hosts into one shared [[Collision Domain|collision-domain]] still strained busy rooms until switches later gave every port its own wire. Even then, Ethernet's success exposed a bigger barrier: a flat 48-bit MAC address only identifies a card on one local cable, carrying zero map of the outside world. With Ethernet LANs, ARPANET trunks, and packet radio all speaking incompatible frames, how do you bridge separate networks into one global Internet?",
       "tts": "By 1983, IEEE 802.3 turned local office wiring into a global standard, though packing dozens of hosts into one shared Collision Domain still strained busy rooms until switches later gave every port its own wire. Even then, Ethernet's success exposed a bigger barrier: a flat 48-bit MAC address only identifies a card on one local cable, carrying zero map of the outside world. With Ethernet LANs, ARPANET trunks, and packet radio all speaking incompatible frames, how do you bridge separate networks into one global Internet?",
-      "sceneNotes": "Three isolated network islands—ETHERNET LAN (1983), ARPANET (IMP), and PACKET RADIO (PRNET)—sit across the canvas. Inside Ethernet, a shared collision bus briefly separates into clean switched ports, then an outgoing frame stops at a dashed barrier labeled FLAT MAC · NO GLOBAL ROUTE? pointing toward a central ? GATEWAY silhouette."
+      "sceneNotes": "Three isolated network islands—ETHERNET LAN (1983), ARPANET (IMP), and PACKET RADIO (PRNET)—sit across the canvas. Inside Ethernet, a shared collision bus briefly separates into clean switched ports, then an outgoing frame stops at a dashed barrier labeled FLAT MAC · NO GLOBAL ROUTE? pointing toward a central ? GATEWAY silhouette.",
+      "deepDive": {
+        "title": "Collision Domains Explained | Hubs vs Switches | CSMA/CD | Networking Basics",
+        "channel": "Reticux Engineering",
+        "url": "https://www.youtube.com/watch?v=pHV65gQTNjc",
+        "focus": "Explains why shared hubs create one collision domain, how switches isolate ports, and where local Layer-2 frames stop."
+      }
     }
   ],
   "codex": {

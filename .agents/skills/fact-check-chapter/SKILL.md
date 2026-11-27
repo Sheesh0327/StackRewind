@@ -16,9 +16,11 @@ Inspect every page (`dialogue`, `tts`, `sceneNotes`), every `codex` entry (`term
 3. **Causal Accuracy (`whyItWasInvented`)**: Confirm the cited bottleneck, cost, or failure mode genuinely motivated the design rather than repeating a retrospective myth.
 4. **Modern Accuracy (`realWorldSighting`)**: Verify that cited modern protocols, Wireshark/CLI inspections, OS behaviors, or header fields still work as described today.
 5. **SVG-to-Dialogue Fidelity**: Verify that diagram labels, bit sequences, node counts, packet routes, timing ratios, and failure states in `sceneNotes` and `scenes/*.js` match the prose and engineering reality.
+6. **Per-Page YouTube Deep-Dive Verification**: Verify every page's `deepDive` (`title`, `channel`, `url`, `focus`) resolves to a real, live YouTube video (via web search + YouTube oEmbed/link resolution), matches the cited creator/title, and deeply explains that specific page's mechanism. Flag any dead, off-topic, or guessed video ID as `INCORRECT`.
 
 ## Verification Protocol
 
+- Whenever `content/<volume>/ROADMAP.md` exists, cross-check the draft against its primary evidence links, `## Editorial checks`, and `## Published chapter maintenance` notes.
 - Whenever any date, protocol detail, bit layout, or historical attribution is uncertain, **verify against authoritative sources** (primary RFCs, standards docs, hardware manuals, or reliable reference lookups) rather than relying on memory or guessing.
 - Preserve StackRewind's **Problem → Concrete Mechanism → Result/Trade-Off** density (`60–95` target words per page): proposed fixes MUST correct inaccuracies concisely without bloating pages with unrelated trivia.
 

@@ -23,6 +23,10 @@ const els = {
   speaker: document.getElementById("page-speaker"),
   sceneTitle: document.getElementById("page-title"),
   dialogue: document.getElementById("page-dialogue"),
+  deepDiveWrap: document.getElementById("page-deep-dive"),
+  deepDiveTitle: document.getElementById("page-deep-dive-title"),
+  deepDiveFocus: document.getElementById("page-deep-dive-focus"),
+  deepDiveLink: document.getElementById("page-deep-dive-link"),
   prevBtn: document.getElementById("prev-page-btn"),
   nextBtn: document.getElementById("next-page-btn"),
   pageIndicator: document.getElementById("page-indicator"),
@@ -285,6 +289,22 @@ function renderCoverCard() {
   els.coverCard.hidden = false;
 }
 
+function isValidYouTubeUrl(rawUrl) {
+  if (typeof rawUrl !== "string") return false;
+  try {
+    const parsed = new URL(rawUrl);
+    return (
+      parsed.protocol === "https:" &&
+      (parsed.hostname === "youtube.com" ||
+        parsed.hostname === "www.youtube.com" ||
+        parsed.hostname === "m.youtube.com" ||
+        parsed.hostname === "youtu.be")
+    );
+  } catch {
+    return false;
+  }
+}
+
 async function renderPage() {
   const token = ++state.renderToken;
   const page = state.chapter.pages[state.pageIndex];
@@ -306,6 +326,17 @@ async function renderPage() {
   els.dialogue.replaceChildren(
     parseDialogueToFragment(page.dialogue, state.chapter.codex, (termId) => codex.openTerm(termId))
   );
+
+  if (page.deepDive && isValidYouTubeUrl(page.deepDive.url)) {
+    const dd = page.deepDive;
+    els.deepDiveTitle.textContent = dd.channel ? `${dd.title} — ${dd.channel}` : dd.title;
+    els.deepDiveFocus.textContent = dd.focus || "";
+    els.deepDiveLink.href = dd.url;
+    els.deepDiveWrap.hidden = false;
+  } else {
+    els.deepDiveLink.href = "#";
+    els.deepDiveWrap.hidden = true;
+  }
 
   els.pageIndicator.textContent = `Page ${pageNum} / ${total}`;
   els.prevBtn.disabled = state.pageIndex === 0;
@@ -476,6 +507,9 @@ async function init() {
   els.prevBtn.addEventListener("click", goPrev);
   els.nextBtn.addEventListener("click", goNext);
   els.glossaryBtn.addEventListener("click", () => codex.openGlossary());
+  els.deepDiveLink.addEventListener("click", () => {
+    audio.pauseForOverlay();
+  });
 
   window.addEventListener("hashchange", () => {
     applyRoute();

@@ -33,6 +33,7 @@ Present the complete proposed **Volume Roadmap** to the user:
 
 - **Volume Metadata**: `id`, `title`, `subtitle`, initial `status` (`"coming-soon"` until Chapter 1 is authored, or `"published"` once Chapter 1 is built), and `assetPrefix` pattern (`<vol>-ch<N>`).
 - **Planned Directory Layout**:
+  - `content/<volume>/ROADMAP.md` (authoritative chapter-by-chapter story roadmap read by `author-chapter`)
   - `content/<volume>/scenes/looping-scene.js`
   - `content/<volume>/tts/`
   - `content/<volume>/chapter1.json` .. `chapter<K>.json`
@@ -50,14 +51,16 @@ Proceed to Phase 3 only after explicit user confirmation.
 
 Once approved, scaffold the volume cleanly:
 
-1. **Create Self-Contained Scene Runtime**:
+1. **Create Authoritative Volume Roadmap (`content/<volume>/ROADMAP.md`)**:
+   - Write the approved chapter order, era, engineering problem, concrete mechanism, design rationale, reader puzzle, and causal cliffhangers into `content/<volume>/ROADMAP.md` so `author-chapter` follows it chapter by chapter.
+2. **Create Self-Contained Scene Runtime**:
    - Copy `content/networking/scenes/looping-scene.js` into `content/<volume>/scenes/looping-scene.js` so the volume never reaches outside its own directory or touches Console code.
-2. **Prepare TTS Folder**:
+3. **Prepare TTS Folder**:
    - Create `content/<volume>/tts/` (adding a `.gitkeep` only if no chapter TTS manifest is generated in the same session).
-3. **Register Volume in `content/manifest.json`**:
+4. **Register Volume in `content/manifest.json`**:
    - Add the new volume entry to `volumes[]`.
    - Use `"status": "coming-soon"` if chapters are not yet generated (so `scripts/validate-cartridge.mjs` does not fail on unauthored `"published"` chapters), or `"published"` alongside `"chapters": [...]` if Chapter 1 is built immediately via `author-chapter`.
-4. **Validate Baseline Integrity**:
+5. **Validate Baseline Integrity**:
    - Run `node scripts/validate-cartridge.mjs` to verify existing published cartridges still pass (`exit 0`).
-5. **Hand Off to `author-chapter`**:
+6. **Hand Off to `author-chapter`**:
    - If the user chose to build Chapter 1 next, immediately enter `author-chapter` **Phase 1 (Discovery Interview)** for Chapter 1 rather than skipping directly to code generation.

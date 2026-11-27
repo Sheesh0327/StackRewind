@@ -6,7 +6,7 @@
 
 - **Read-Only Console (DO NOT EDIT when authoring content):** `index.html`, `css/`, `js/`
 - **Writable Content Cartridges:** `content/` and `assets/`
-- **Authoring Tooling:** `scripts/generate-tts.mjs`, `scripts/validate-cartridge.mjs`, `scripts/validate-skills.mjs`
+- **Authoring Tooling:** `scripts/author-studio.py`, `scripts/generate-tts.mjs`, `scripts/validate-cartridge.mjs`, `scripts/validate-skills.mjs`
 
 Adding or updating a volume or chapter MUST NEVER require modifying `index.html`, `css/`, or `js/`.
 
@@ -20,6 +20,7 @@ Whenever a coding agent or generative model is asked to write, update, or genera
    - `volumeId`, `chapterId`, `chapterNumber`, `assetPrefix` (`<vol>-ch<N>`), `era`, `title`, `subtitle`, `pages[]`, and chapter-scoped `codex{}`.
    - Every page's `dialogue` uses `[[Display Term|term-id]]` inline tokens resolved in `chapter.codex`.
    - Every page MUST include a clean, bracket-free `"tts"` spoken narration string (no `[[` or `]]`).
+   - Every page MUST include a verified `"deepDive"` object (`title`, `channel`, `url`, `focus`) pointing to a real YouTube deep-dive video for that page's core concept (never guess or fabricate YouTube video IDs).
 3. **Looping Dual-Theme SVG Scene Modules** (`content/<volume>/scenes/<sceneModule>.js`)
    - Every `"panelType": "svg-scene"` page MUST ship a continuously looping `960×540` SVG animation built on `content/networking/scenes/looping-scene.js` (or matching contract), exporting `mount`, `unmount`, `pause`, `resume`, and `replay`.
    - Must scope CSS with `[data-scene="<id>"]` and consume `--sr-*` theme tokens so both Warm Paper Noir (Dark) and Warm Paper (Light) themes work automatically.
@@ -47,5 +48,6 @@ All authoring skills live canonically in `.agents/skills/<skill-name>/SKILL.md` 
 | [`review-cartridge`](.agents/skills/review-cartridge/SKILL.md) | `/review-cartridge` / `$review-cartridge` | Run pre-publish validation (`validate-cartridge.mjs`), TTS pacing checks, and Light/Dark desktop+mobile QA |
 
 > **Pre-Code Review Gate:** `author-volume` and `author-chapter` MUST ask targeted interview questions and obtain explicit user approval on the roadmap or full script/storyboard before writing Cartridge files (unless the user explicitly says `"skip review and generate directly"`).
+> **Volume Roadmap Source of Truth:** Whenever `content/<volume>/ROADMAP.md` exists (e.g., [`content/networking/ROADMAP.md`](content/networking/ROADMAP.md)), every authoring agent MUST read it alongside `content/manifest.json`, select the lowest unpublished chapter number by default, and follow its chapter brief, storyboard beats, design rationale, reader puzzle, and cited evidence.
 
 Validate all skills with `node scripts/validate-skills.mjs`, and inspect [`content/README.md`](content/README.md) whenever authoring or modifying chapters.

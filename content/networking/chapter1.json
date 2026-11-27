@@ -15,7 +15,13 @@
       "speaker": "The Guide",
       "dialogue": "Pull up a chair and watch that flat line. Without a [[Network Protocol|network-protocol]], two machines staring across a wire only see raw voltage pulses—no idea where a message starts, who owns it, or whether noise flipped a bit. Protocols solve this by stamping strict frame boundaries, sequence rules, and error checks onto every signal. To understand why the modern Internet breaks data into tiny pieces, rewind to the system that broke under pressure.",
       "tts": "Pull up a chair and watch that flat line. Without a Network Protocol, two machines staring across a wire only see raw voltage pulses—no idea where a message starts, who owns it, or whether noise flipped a bit. Protocols solve this by stamping strict frame boundaries, sequence rules, and error checks onto every signal. To understand why the modern Internet breaks data into tiny pieces, rewind to the system that broke under pressure.",
-      "sceneNotes": "First-person view at the archive desk. The Guide slides a disconnected patch cord and a blank blueprint into the amber lamp light."
+      "sceneNotes": "First-person view at the archive desk. The Guide slides a disconnected patch cord and a blank blueprint into the amber lamp light.",
+      "deepDive": {
+        "title": "Sending digital information over a wire | Networking tutorial (1 of 13)",
+        "channel": "Ben Eater",
+        "url": "https://www.youtube.com/watch?v=XaGXPObx2Gs",
+        "focus": "Shows how raw voltage pulses become framed digital bits using clocks and protocol rules."
+      }
     },
     {
       "page": 2,
@@ -25,7 +31,13 @@
       "speaker": "The Guide",
       "dialogue": "Spin the dial back to 1960. The [[Analog Telephone Network|analog-telephone-network]] carries voices by locking an unbroken electrical path from caller to listener until someone hangs up. Human speech fills that path steadily, so keeping it dedicated works. Computers behave differently: they fire off a millisecond burst of data, then sit silent for seconds while you read or type—leaving over ninety percent of that expensive copper trunk completely idle.",
       "tts": "Spin the dial back to 1960. The Analog Telephone Network carries voices by locking an unbroken electrical path from caller to listener until someone hangs up. Human speech fills that path steadily, so keeping it dedicated works. Computers behave differently: they fire off a millisecond burst of data, then sit silent for seconds while you read or type—leaving over ninety percent of that expensive copper trunk completely idle.",
-      "sceneNotes": "The same desk opens onto an electromechanical exchange. The reader holds a rotary telephone handset while the Guide points to a route on a paper map."
+      "sceneNotes": "The same desk opens onto an electromechanical exchange. The reader holds a rotary telephone handset while the Guide points to a route on a paper map.",
+      "deepDive": {
+        "title": "Switching Techniques in Computer Networks",
+        "channel": "Neso Academy",
+        "url": "https://www.youtube.com/watch?v=-HlJ4psu5aU",
+        "focus": "Explains how dedicated telephone circuits reserve an end-to-end path versus message and packet switching."
+      }
     },
     {
       "page": 3,
@@ -35,7 +47,13 @@
       "speaker": "The Guide",
       "dialogue": "Dialing triggers electromechanical relays across every intermediate exchange to latch shut, and [[Circuit Switching|circuit-switching]] reserves that entire copper chain exclusively for one session. Even during long silent gaps, Computer C gets a busy signal and cannot borrow the unused wire. Worse, every switch along the path is a single point of failure: knock out Exchange 2 in the middle and the whole reserved connection drops dead instantly.",
       "tts": "Dialing triggers electromechanical relays across every intermediate exchange to latch shut, and Circuit Switching reserves that entire copper chain exclusively for one session. Even during long silent gaps, Computer C gets a busy signal and cannot borrow the unused wire. Worse, every switch along the path is a single point of failure: knock out Exchange 2 in the middle and the whole reserved connection drops dead instantly.",
-      "sceneNotes": "Trace a reserved circuit through three exchanges. Hold the highlight through silence, then break the path at the middle exchange."
+      "sceneNotes": "Trace a reserved circuit through three exchanges. Hold the highlight through silence, then break the path at the middle exchange.",
+      "deepDive": {
+        "title": "Circuit Switching vs. Packet Switching",
+        "channel": "Sunny Classroom",
+        "url": "https://www.youtube.com/watch?v=B1tElYnFqL8",
+        "focus": "Compares reserved circuits sitting idle against shared packet trunks and link-failure resilience."
+      }
     },
     {
       "page": 4,
@@ -45,7 +63,13 @@
       "speaker": "The Guide",
       "dialogue": "Between 1960 and 1964, Paul Baran solved both bottlenecks with a [[Distributed Mesh|distributed-mesh]] where switches link to multiple neighbors. Instead of reserving a line, the sender chops data into 1,024-bit [[Message Blocks|message-blocks]], stamping each block's destination address and sequence number onto its header. Using [[Hot-Potato Routing|hot-potato-routing]], each switch checks a tiny local hop table and immediately hands the block to its best surviving neighbor—so when a hub dies, blocks detour automatically without a central map.",
       "tts": "Between 1960 and 1964, Paul Baran solved both bottlenecks with a Distributed Mesh where switches link to multiple neighbors. Instead of reserving a line, the sender chops data into 1,024-bit Message Blocks, stamping each block's destination address and sequence number onto its header. Using Hot-Potato Routing, each switch checks a tiny local hop table and immediately hands the block to its best surviving neighbor—so when a hub dies, blocks detour automatically without a central map.",
-      "sceneNotes": "Show several possible routes. A hub goes dark and the next block moves hop by hop along a surviving route."
+      "sceneNotes": "Show several possible routes. A hub goes dark and the next block moves hop by hop along a surviving route.",
+      "deepDive": {
+        "title": "Computer Networks: Crash Course Computer Science #28",
+        "channel": "CrashCourse",
+        "url": "https://www.youtube.com/watch?v=3QhU9jd03a0",
+        "focus": "Traces packet switching, distributed routing around failures, and how early local and wide-area networks evolved."
+      }
     },
     {
       "page": 5,
@@ -55,7 +79,13 @@
       "speaker": "The Guide",
       "dialogue": "In 1961, Leonard Kleinrock proved with [[Queueing Theory|queueing-theory]] that sharing one fast trunk beats splitting lines into slow dedicated slices. When Terminal A and Terminal B burst simultaneously, a short FIFO memory buffer holds the extra chunks in line, then drains them into the quiet gaps right behind—achieving statistical multiplexing without collisions. In 1966, Donald Davies standardized each self-addressed chunk as a [[Packet|packet]], pairing a routing header with a clean payload slice.",
       "tts": "In 1961, Leonard Kleinrock proved with Queueing Theory that sharing one fast trunk beats splitting lines into slow dedicated slices. When Terminal A and Terminal B burst simultaneously, a short FIFO memory buffer holds the extra chunks in line, then drains them into the quiet gaps right behind—achieving statistical multiplexing without collisions. In 1966, Donald Davies standardized each self-addressed chunk as a Packet, pairing a routing header with a clean payload slice.",
-      "sceneNotes": "Two terminals send bursts into a short queue. Alternate their chunks on one link and show the queue grow when both send at once."
+      "sceneNotes": "Two terminals send bursts into a short queue. Alternate their chunks on one link and show the queue grow when both send at once.",
+      "deepDive": {
+        "title": "Types of Delay in computer network | Understanding of delay in computer network",
+        "channel": "Chirag Bhalodia",
+        "url": "https://www.youtube.com/watch?v=h411mZceR5A",
+        "focus": "Breaks down queueing delay, transmission delay, and how router buffers absorb overlapping packet bursts."
+      }
     },
     {
       "page": 6,
@@ -65,7 +95,13 @@
       "speaker": "The Guide",
       "dialogue": "In 1969, [[ARPANET|arpanet]] solved mainframe incompatibility by placing a dedicated Interface Message Processor—an IMP minicomputer—in front of every host to slice, header, and forward packets automatically. The October 29 login crashed SRI's host buffer after typing L and O, yet by December four sites—UCLA, SRI, UCSB, and Utah—were routing packets across the map. That success raised the next physical problem: when two hosts share one wire and transmit at the exact same instant, their signals collide.",
       "tts": "In 1969, ARPANET solved mainframe incompatibility by placing a dedicated Interface Message Processor—an IMP minicomputer—in front of every host to slice, header, and forward packets automatically. The October 29 login crashed SRI's host buffer after typing L and O, yet by December four sites—UCLA, SRI, UCSB, and Utah—were routing packets across the map. That success raised the next physical problem: when two hosts share one wire and transmit at the exact same instant, their signals collide.",
-      "sceneNotes": "An October login record sits beside a separate December four-site map. The Guide taps a sketch of a shared wire as two signals converge."
+      "sceneNotes": "An October login record sits beside a separate December four-site map. The Guide taps a sketch of a shared wire as two signals converge.",
+      "deepDive": {
+        "title": "ARPANET: The First Message That Built the Internet",
+        "channel": "Power Through Time",
+        "url": "https://www.youtube.com/watch?v=qEcjLDjVBX0",
+        "focus": "Walks through the October 29, 1969 'LO' login crash, Honeywell IMPs, and the four-node ARPANET launch."
+      }
     }
   ],
   "codex": {

@@ -37,8 +37,9 @@ Verify on every page:
 3. **Theme Contrast & Layout**: Crisp legibility in both Dark and Light modes, zero clipped text at SVG/stage borders, and zero overlapping labels or controls.
 4. **Interactive Controls**:
    - Clicking `[[Term|id]]` Codex pills opens the Codex drawer with complete fields.
-   - Next/Previous navigation updates page number, SVG scene, and audio track cleanly.
+   - Next/Previous navigation updates page number, SVG scene, `Deep-Dive Video` card, and audio track cleanly.
    - Audio playback initializes without decoding errors.
+   - Each page's `Deep-Dive Video` card renders cleanly in Light and Dark themes without text overlap or overflow and links to a valid `https://` YouTube URL.
 
 ## 4. Pre-Publish QA Verdict Report
 

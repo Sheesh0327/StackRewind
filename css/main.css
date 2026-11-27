@@ -750,6 +750,58 @@ body {
   color: var(--sr-ink);
 }
 
+.sr-deep-dive {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--sr-border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+}
+
+.sr-deep-dive-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 220px;
+}
+
+.sr-deep-dive-eyebrow {
+  font-family: var(--sr-font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--sr-amber);
+}
+
+.sr-deep-dive-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--sr-ink);
+}
+
+.sr-deep-dive-focus {
+  font-size: 0.84rem;
+  color: var(--sr-ink-secondary);
+  line-height: 1.45;
+}
+
+.sr-deep-dive-link {
+  text-decoration: none;
+  flex-shrink: 0;
+  color: var(--sr-amber);
+  background: var(--sr-amber-soft);
+  border-color: var(--sr-amber-line);
+}
+
+.sr-deep-dive-link:hover {
+  color: var(--sr-amber-hover);
+  border-color: var(--sr-amber);
+}
+
 /* Archival Control Bar */
 .sr-control-bar {
   background: var(--sr-surface-grad);
@@ -875,6 +927,13 @@ body {
     justify-content: space-between;
     padding-top: 0.55rem;
     border-top: 1px solid var(--sr-border);
+  }
+  .sr-deep-dive {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sr-deep-dive-link {
+    justify-content: center;
   }
 }
 

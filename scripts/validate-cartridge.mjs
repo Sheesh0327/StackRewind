@@ -3,6 +3,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 const TOKEN_RE = /\[\[([^\]|]+)\|([^\]]+)\]\]/g;
+const YOUTUBE_URL_RE = /^https:\/\/(www\.|m\.)?(youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}(?:&.*)?|youtu\.be\/[A-Za-z0-9_-]{11}(?:\?.*)?)$/;
 const REQUIRED_EXPORTS = ["mount", "unmount", "pause", "resume", "replay"];
 const PAGE_MIN_WORDS = 30;
 const PAGE_MAX_WORDS = 130;
@@ -85,6 +86,19 @@ async function validateChapter(chPath, opts, errors, warnings) {
     for (const field of ["page", "panelType", "title", "speaker", "dialogue", "tts", "sceneNotes"]) {
       if (p[field] === undefined || p[field] === null || p[field] === "") {
         errors.push(`${chPath} page ${p.page ?? i + 1}: missing "${field}"`);
+      }
+    }
+
+    if (!p.deepDive || typeof p.deepDive !== "object") {
+      errors.push(`${chPath} page ${p.page ?? i + 1}: missing "deepDive" YouTube object`);
+    } else {
+      for (const dk of ["title", "channel", "url", "focus"]) {
+        if (typeof p.deepDive[dk] !== "string" || !p.deepDive[dk].trim()) {
+          errors.push(`${chPath} page ${p.page}: deepDive missing non-empty "${dk}"`);
+        }
+      }
+      if (typeof p.deepDive.url === "string" && !YOUTUBE_URL_RE.test(p.deepDive.url.trim())) {
+        errors.push(`${chPath} page ${p.page}: deepDive.url must be a valid https://youtube.com/watch?v=... or https://youtu.be/... URL`);
       }
     }
 

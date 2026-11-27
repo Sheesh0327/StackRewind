@@ -12,9 +12,15 @@ Guide a chapter from initial engineering premise to human-approved script to a c
 1. **NEVER create or edit any Cartridge file** (`content/<volume>/chapter<N>.json`, `content/<volume>/scenes/*.js`, `content/<volume>/tts/*-tts.json`, `assets/audio/*.mp3`, or `content/manifest.json`) until you have completed **Phase 1 (Discovery Interview)** and received **explicit user approval** in **Phase 2 (Script & Storyboard Review Gate)**.
 2. **Explicit Escape Hatch**: Skip Phase 1 and Phase 2 *only* if the user explicitly writes a fast-track instruction such as `"skip review and generate directly"`.
 
-## Canonical Reference
+## Canonical Reference & Volume Roadmap Source of Truth
 
-Inspect Volume 1, Chapter 1 as the gold-standard exemplar before drafting:
+Before interviewing or drafting, always inspect `content/manifest.json` and check for `content/<volume>/ROADMAP.md`:
+
+- **Mandatory Volume Roadmap (`content/<volume>/ROADMAP.md`)**: When `content/<volume>/ROADMAP.md` exists (e.g., [content/networking/ROADMAP.md](../../content/networking/ROADMAP.md)), it is the **authoritative editorial source of truth** for chapter order, `era`, assigned engineering problem, design rationale, reader puzzle, primary historical evidence links, chapter-specific storyboard briefs (`## Chapter <N> storyboard brief`), and `## Editorial checks`.
+- **Selecting the Next Chapter**: Match published chapters in `content/manifest.json` against `ROADMAP.md` and select the **lowest-numbered roadmap entry absent from `manifest.json`** (unless the user explicitly names a different chapter). Bring that chapter's roadmap entry, its storyboard brief (letting comprehension & storyboard beats set page count), and the previous chapter's ending directly into **Phase 1** and **Phase 2**.
+- **No Silent Drift**: Never silently reorder chapters or swap a roadmap chapter's assigned bottleneck; update `ROADMAP.md` first (or confirm an explicit override with the user) before diverging.
+
+Inspect Volume 1, Chapter 1 as the gold-standard Cartridge exemplar:
 - Manifest: `content/manifest.json`
 - Chapter JSON + inline `tts`: `content/networking/chapter1.json`
 - Looping scene helper & scenes: `content/networking/scenes/looping-scene.js` and `content/networking/scenes/net-ch1-p01.js` .. `net-ch1-p06.js`
@@ -30,7 +36,7 @@ Before drafting full prose or writing any code, ask the user **3–5 concise, fo
 1. **Target Scope & Continuity**: Confirm the target `volumeId`, `chapterNumber`, historical `era`, and the causal engineering hook continuing from the previous chapter (or starting the volume).
 2. **Core Bottleneck & Concrete Mechanism**: Ask which exact failure mode broke the old system and which concrete mechanisms must be unpacked step-by-step (e.g., frame delimiters, header fields, state tables, queues, lookup algorithms).
 3. **Page Budget & Codex Anchors**: Confirm the page count (default `6` pages) and ask which key technical terms (`[[Display Term|term-id]]`) and modern `realWorldSighting` tools/protocols the user wants highlighted.
-4. **Visual Metaphors (`svg-scene`)**: Ask if the user has specific diagrams, packet flows, or mechanical animations in mind for any page's looping `960×540` scene.
+4. **Visual Metaphors (`svg-scene`) & YouTube Deep-Dives**: Ask if the user has specific diagrams, packet flows, or mechanical animations in mind for any page's looping `960×540` scene, and whether they prefer specific YouTube deep-dive creators (default: concrete technical channels such as Ben Eater, Computerphile, Neso Academy, or CrashCourse).
 5. **Voice & Pacing Preference**: Confirm default narration (`en-US-AndrewMultilingualNeural` at default natural speech rate and pitch) unless the user requests a different voice or pacing.
 
 Wait for the user's answers before drafting Phase 2.
@@ -47,6 +53,7 @@ Draft and present the **complete proposed script and visual plan** directly to t
   - Full `dialogue` following a **Problem → Concrete Mechanism → Result/Trade-Off** arc (`60–95` target words, strictly `30–130` words after stripping `[[...|...]]` tokens).
   - Exact spoken `tts` string matching `dialogue` cleanly with **zero** `[[` or `]]` brackets.
   - A 1-paragraph `sceneNotes` choreography describing the looping visual states, labels, and contrast cues in both Light and Dark themes.
+  - A verified per-page `deepDive` YouTube recommendation (`title`, `channel`, `url`, `focus`) explaining that page's core concept deeply so readers can master it before moving on. **Verify every YouTube URL live** (web search + YouTube oEmbed / link resolution)—NEVER guess or invent YouTube video IDs.
 - **Complete `codex` Glossary**: Every `term-id` referenced in `dialogue`, showing `term`, `shortTag`, `plainEnglish`, `whyItWasInvented`, and `realWorldSighting` (`>= 10` words per prose field).
 
 **STOP HERE.** Do not write or modify any files. End your Phase 2 message with a prompt equivalent to:
@@ -61,7 +68,7 @@ Proceed to Phase 3 only after the user explicitly approves the script (or approv
 Once approved, produce every Cartridge deliverable in a single pass:
 
 ### 1. Write `content/<volume>/chapter<N>.json`
-- Populate `volumeId`, `chapterId` (`ch<N>`), `chapterNumber`, `assetPrefix` (`<vol>-ch<N>`), `era`, `title`, `subtitle`, `pages[]`, and `codex{}` matching the approved script.
+- Populate `volumeId`, `chapterId` (`ch<N>`), `chapterNumber`, `assetPrefix` (`<vol>-ch<N>`), `era`, `title`, `subtitle`, `pages[]` (each including its verified `deepDive` `{ title, channel, url, focus }`), and `codex{}` matching the approved script.
 - Verify the **Anti-Bloat Checklist**:
   - Every page follows **Problem → Concrete Mechanism → Result/Trade-Off**.
   - No generic hype ("changed history forever"), no unrelated biographical trivia, and no repeating in `dialogue` what belongs inside `codex`.
